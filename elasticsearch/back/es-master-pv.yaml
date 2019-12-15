@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: efk-master-pv-0
+spec:
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /opt/lg-vol-mnt
+    type: ""
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: efk-master-storage

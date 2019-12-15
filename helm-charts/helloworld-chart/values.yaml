@@ -1,0 +1,9 @@
+image:
+  repository: library/nginx
+  tag: latest
+  pullPolicy: IfNotPresent
+service:
+  name: hello-world
+  type: NodePort
+  externalPort: 80
+  internalPort: 8005

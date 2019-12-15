@@ -1,0 +1,83 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: nginx
+  name: nginx
+spec:
+  ports:
+  - nodePort: 30500
+    port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: nginx
+  type: NodePort
+
+
+
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: nginx
+  
+spec:
+  # privileged: false
+  selector:
+    matchLabels:
+      app: nginx # has to match .spec.template.metadata.labels
+  serviceName: "nginx"
+  replicas: 2 # by default is 1
+  template:
+    metadata:
+      labels:
+        app: nginx # has to match .spec.selector.matchLabels
+    spec:
+      #privileged: false
+      terminationGracePeriodSeconds: 10
+          
+
+      containers:
+      - name: nginx
+        image: nginx
+      #        securityContext:
+      #    privileged: false
+      #    runAsUser: 1002
+        ports:
+        - containerPort: 80
+          name: nginx
+        resources:
+          requests:
+            memory: "100Mi"
+            cpu: "50m"
+          limits:
+            memory: "180Mi"
+            cpu: "100m"
+#        livenessProbe:       #this block performs liveness probes
+#          httpGet:
+#            path: /
+#            port: 80
+#        readinessProbe:      #this block performs readiness probes
+#          httpGet:
+#            path: /
+#            port: 80  
+
+
+
+       volumeMounts:
+          - name: dev-nginx-html
+            mountPath: "/usr/share/nginx/html"
+        
+          - name: dev-nginx-log
+            mountPath: "/var/log/nginx"
+#        securityContext:
+#                allowPrivilegeEscalation: false
+      volumes:
+        - name: dev-nginx-html
+          persistentVolumeClaim:
+            claimName: dev-pvc-nginx-html
+              
+        - name: dev-nginx-log
+          persistentVolumeClaim:
+            claimName: dev-pvc-nginx-log 

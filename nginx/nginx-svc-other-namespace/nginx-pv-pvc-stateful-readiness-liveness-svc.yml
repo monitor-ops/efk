@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx
+  namespace: elk-test  
+  labels:
+    app: nginx
+  name: nginx
+spec:
+  ports:
+  - nodePort: 30900
+    port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: nginx
+  type: NodePort
+
+
+

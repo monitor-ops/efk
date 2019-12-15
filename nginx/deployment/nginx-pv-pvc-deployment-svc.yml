@@ -1,0 +1,57 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx
+  labels:
+    app: nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - image: nginx
+        name: nginx
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            memory: "100Mi"
+            cpu: "50m"
+          limits:
+            memory: "200Mi"
+            cpu: "100m"
+        volumeMounts:
+          - name: dev-nginx-html
+            mountPath: "/usr/share/nginx/html"
+          - name: dev-nginx-log
+            mountPath: "/var/log/nginx"
+      volumes:
+        - name: dev-nginx-html
+          persistentVolumeClaim:
+            claimName: dev-pvc-nginx-html
+        - name: dev-nginx-log
+          persistentVolumeClaim:
+            claimName: dev-pvc-nginx-log
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: nginx
+  name: nginx
+spec:
+  ports:
+  - nodePort: 30500
+    port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: nginx
+  type: NodePort

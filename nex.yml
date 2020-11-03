@@ -34,14 +34,17 @@ spec:
        hostPath:
            path: /var/lib/docker
 ---
-kind: Service
 apiVersion: v1
+kind: Service
 metadata:
  name: nexclipperlight
-spec:
- type: LoadBalancer
- ports:
-   - port: 10001
-     targetPort: 9001
- selector:
+ labels:
    component: nexclipperlight
+spec:
+  selector:
+    component: nexclipperlight
+  ports:
+  - name: http
+    port: 9001
+    targetPort: http
+  type: NodePort

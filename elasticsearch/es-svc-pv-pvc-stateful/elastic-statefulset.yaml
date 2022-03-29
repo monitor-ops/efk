@@ -32,11 +32,11 @@ spec:
     spec:
       containers:
       - name: elasticsearch
-        image: docker.elastic.co/elasticsearch/elasticsearch:7.2.0
+        image: docker.elastic.co/elasticsearch/elasticsearch:8.0.0
         resources:
           limits:
             #cpu: "1000m"
-            memory: "1Gi"
+            memory: "1.5Gi"
           requests:
             #cpu: "100m"
             memory: "1Gi"
@@ -45,8 +45,8 @@ spec:
           mountPath: /usr/share/elasticsearch/data
         - name: es-config
           mountPath: /usr/share/elasticsearch/config
-        - name: es-log
-          mountPath: /usr/share/elasticsearch/logs
+          #- name: es-log
+          #mountPath: /usr/share/elasticsearch/logs
   
         env:
           - name: cluster.name
@@ -72,8 +72,8 @@ spec:
           mountPath: /usr/share/elasticsearch/data
         - name: es-config
           mountPath: /usr/share/elasticsearch/config
-        - name: es-log
-          mountPath: /usr/share/elasticsearch/logs
+          #- name: es-log
+          #mountPath: /usr/share/elasticsearch/logs
 
       - name: increase-vm-max-map
         image: busybox
@@ -92,9 +92,9 @@ spec:
         - name: es-config
           persistentVolumeClaim:
             claimName: dev-pvc-es-config
-        - name: es-log
-          persistentVolumeClaim:
-            claimName: dev-pvc-es-logs
+            #- name: es-log
+            #persistentVolumeClaim:
+            #claimName: dev-pvc-es-logs
         
            
            

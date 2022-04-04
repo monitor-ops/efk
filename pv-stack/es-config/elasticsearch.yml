@@ -1,3 +1,24 @@
 cluster.name: "docker-cluster"
 network.host: 0.0.0.0
+
 xpack.security.enabled: false
+xpack.security.transport.ssl.enabled: false
+xpack.security.http.ssl.enabled: false
+
+
+
+#xpack.security.transport.ssl.enabled: true
+#xpack.security.transport.ssl.key: "certs/es.key"
+#xpack.security.transport.ssl.certificate: "certs/es.crt"
+#xpack.security.authc.api_key.enabled: true
+#
+#xpack.security.http.ssl.enabled: true
+#
+#xpack.security.http.ssl.certificate: "certs/es.crt"
+#
+#xpack.security.http.ssl.key: "certs/es.key"
+
+#
+#xpack.security.http.ssl.certificate_authorities: [ "ca.crt" ]
+#
+

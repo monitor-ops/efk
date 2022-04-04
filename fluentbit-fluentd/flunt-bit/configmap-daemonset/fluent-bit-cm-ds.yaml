@@ -64,10 +64,11 @@ data:
     [OUTPUT]
         Name            es
         Match           *
-        Host            \${FLUENT_ELASTICSEARCH_HOST}
-        Port            \${FLUENT_ELASTICSEARCH_PORT}
+        Host            ${FLUENT_ELASTICSEARCH_HOST}
+        Port            ${FLUENT_ELASTICSEARCH_PORT}
         Logstash_Format On
         Retry_Limit     False
+        Suppress_Type_Name       On
 
   parsers.conf: |
     [PARSER]
@@ -146,7 +147,8 @@ spec:
     spec:
       containers:
       - name: fluent-bit
-        image: fluent/fluent-bit:0.14.3
+        #image: fluent/fluent-bit:0.14.3
+        image: fluent/fluent-bit:1.8
         imagePullPolicy: Always
         ports:
           - containerPort: 2020
